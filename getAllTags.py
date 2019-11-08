@@ -11,7 +11,7 @@ def getAllTag():
 
 
 
-print(getAllTag())
+
 
 print(psutil.cpu_count())
 print(int(psutil.virtual_memory()[0]/(1000**3)))
