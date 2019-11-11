@@ -28,6 +28,8 @@ layout = [
     [sg.Submit('Next',key='Next')]
 ]
 
+print(layout)
+
 window = sg.Window('Config', layout)
 window_Next=False
 exec('gui2.py')
