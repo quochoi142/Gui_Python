@@ -18,7 +18,25 @@ print(arrTag)
 print(len(arrTag))
 print("---")
 
-layout = [checkBoxValue(tag) for tag in arrTag]
-window = sg.Window('test', layout, size=(800,600), resizable=True)
-window.Read()
+col = [checkBoxValue(tag) for tag in arrTag]
+layout = [[sg.Column(col, scrollable=True, vertical_scroll_only=True, justification="center")],
+          [sg.Cancel('Exit')]]
+window = sg.Window('test', layout, resizable=True)
+selectScript = []
+
+while True:
+    event, values = window.Read()
+    # print(event, "-----",  values, "\n")
+    if event is None: 
+        break
+    if event == "Exit":
+        break
+    if event in selectScript:
+        selectScript.remove(event)
+    else:
+        selectScript.append(event)
+
 window.Close()
+
+for key in selectScript:
+    print(key)

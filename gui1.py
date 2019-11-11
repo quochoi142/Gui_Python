@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import gui2
+# import gui2
 arr = ['a', 'b', 'v']
 
 
@@ -28,11 +28,10 @@ layout = [
     [sg.Submit('Next',key='Next')]
 ]
 
-print(layout)
-
+# print(layout)
 window = sg.Window('Config', layout)
-window_Next=False
-exec('gui2.py')
+# window_Next=False
+# exec('gui2.py')
 while True:
     event, values= window.Read()
     if event is None: 
