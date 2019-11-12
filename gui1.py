@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import gui2
+import gui2 as next
 arr = ['a', 'b', 'v']
 
 
@@ -25,17 +25,25 @@ layout = [
     [sg.Checkbox('Windows Server', size=(15, 10)), sg.Text(
         'Numbers of instant'), sg.Spin([1, 2, 3, 4], initial_value=1),
      sg.Radio("Default", "mode3",default=True), sg.Radio("Custom", "mode3")],
-    [sg.Submit('Next',key='Next')]
+    [sg.Submit('Next',key='btn_next')]
 ]
 
-window = sg.Window('Config', layout)
-window_Next=False
-exec('gui2.py')
-while True:
-    event, values= window.Read()
-    if event is None: 
-        break
-  
+
+
+def create():
+    window = sg.Window('Config', layout)
+    return window
+
+
+def destroy():
+    window.Close()
+
+
+
+
 
         
-window.Close()
+        
+
+            
+    
