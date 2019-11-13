@@ -1,6 +1,6 @@
 import gui1
 import gui2
-import temp
+
 
 
 def createGui(i,scr):   
@@ -8,7 +8,6 @@ def createGui(i,scr):
         return gui1.create(scr)
     elif i==1:
         return gui2.create(scr)
-    elif i==2:
-        return temp.create(scr)
+    
     else: return None
 
