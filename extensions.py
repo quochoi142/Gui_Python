@@ -12,9 +12,14 @@ def getAllTag():
 
 
 
+def getRam():
+    return int(psutil.virtual_memory()[0]/(1000**3))
 
-print(psutil.cpu_count())
-print(int(psutil.virtual_memory()[0]/(1000**3)))
-print(round(psutil.disk_usage("/")[2]/(1000**3),1))
+def getCPU():
+    return int(psutil.cpu_count())
+
+def getDisk_Usage():
+    return round(psutil.disk_usage("/")[2]/(1000**3),1)
+
 
 
