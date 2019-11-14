@@ -31,11 +31,18 @@ while 1:
     if result == 0:
         break
     elif result==1:
-        
-        if pos+1 < len(scr):
-            scr[pos+1].UnHide()
-        else: 
-            scr.append(fac.createGui(pos+1,scr))  
+        #the first screen is Special-> create VM
+        if pos==0:
+            if pos+1 < len(scr):
+                scr[pos+1]=fac.createGui(pos+1,scr)
+            else: 
+                scr.append(fac.createGui(pos+1,scr))  
+        #Others screen
+        else:
+            if pos+1 < len(scr):
+                scr[pos+1].UnHide()
+            else: 
+                scr.append(fac.createGui(pos+1,scr))  
         scr[pos].Hide()   
         additive=1
     elif result==-1:  
