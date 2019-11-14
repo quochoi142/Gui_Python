@@ -9,7 +9,7 @@ with open("/home/hoivu/Desktop/hoi.yaml", 'r') as stream:
         print(exc)
 
 
-def generateConfig(name):
+def generateConfig(name,src):
     content = {
         'storage_dir': '/home/user_name/.hatch/vmdata/storage',
         'temp_dir': '/home/user_name/.hatch/vmdata/scratch',
@@ -29,6 +29,7 @@ def generateConfig(name):
             'disk': '256G'
         },
         'scripts': [
+            #Required
             {'name': 'schtasks'},
             {'name': 'setres', 'vars': {'width': 1280, 'height': 720}},
             {'name': 'windows'},
@@ -41,6 +42,22 @@ def generateConfig(name):
             {'name': 'ps1logging'},
             {'name': 'patchandgo'},
             {'name': 'finalize'},
+
+            # Recommended
+            #{'name': 'adobe9'}
+            #{'name': 'java7-jdk'}
+            #{'name': 'ie11'}
+            #{'name': 'chrome'}
+            #{'name': 'firefox'}
+            #{'name': 'office2010', 'vars': {'licenseKey': 'GCCVP-793B7-92C6G-KJ4CD-98RYD'}}
+
+            #Optional
+            #{'name': '7zip'}
+            #{'name': 'python2'}
+            #{'name': 'vlc'}
+            #{'name': 'ccleaner'}
+            #{'name': 'gimp'}
+            #{'name': 'random-files'}
         ],
          
           
@@ -53,4 +70,4 @@ def generateConfig(name):
         except yaml.YAMLError as exc:
         print(exc)  
 
-generateConfig('hoi')
+generateConfig('hoi',12)
