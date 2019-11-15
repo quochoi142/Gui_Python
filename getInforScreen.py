@@ -11,13 +11,13 @@ lstOs = [
 
 
 def config(scr):
-    scr0=scr[0]
-    scr1=scr[1]
+    scr0=scr[0].Values
+    scr1=scr[1].Values
     for os in lstOs:
         print(scr0[os['os']])
         if scr0[os['os']]==True:
             print('true')
-            os['num']=scr[os['os']+'_num']
+            os['num']=scr0[os['os']+'_num']
     print(lstOs)
     for os in lstOs:
         for i in range(1,os['num']+1):
@@ -36,13 +36,13 @@ def config(scr):
             content['arch']=os['arch']
             content['iso_file']='win7ultimate.iso'
             content['machine']={
-                'cpu_cores': scr1[id+'_CPU'],
-                'memory': scr1[id+'_Ram'],
-                'disk': scr1[id+'_hardDisk']
+                'cpu_cores': scr1[id+'_cpu'],
+                'memory': scr1[id+'_memory'],
+                'disk': scr1[id+'_disk']
             }
 
             content['instances']=[]
-            for j in range(1,scr1[id+'_Ins']):
+            for j in range(1,scr1[id+'_instance']):
                 ins={
                     'ip':'10.6.0.'+str(os['from']+j)+'/24',
                     'interface': 'tap'+str(os['from']+j),
