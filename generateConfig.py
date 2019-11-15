@@ -17,15 +17,26 @@ def generateConfig(content,name):
             print(exc)
 
 
-# def configData():
-#     content={}
-#     content['sandbox']={
-#         'api': ':8121',
-#         'receiver': 
-#     }
+def configData():
+    content={}
+    content['sandbox']={
+        'api': ':8121',
+        'receiver': ':41234',
+        'display_addr':etx.getIp()
+    }
+    content['machines']=[]
+    VMs=etx.getAllfile(etx.homedir+'/.hatch/config','.yaml')
+    for vm in VMs:
+        temp={}
+        temp['conf']=etx.homedir+'/.hatch/vmdata/storage/'+vm+'/instance_0.vm'
+        temp['tags']=
 
-with open("/home/hoivu/.hatch/data/sandbox.yaml", 'r') as stream:
-    try:
-        print(yaml.safe_load(stream))
-    except yaml.YAMLError as exc:
-        print(exc)
+
+
+# with open('/home/hoivu/.hatch/data/sandbox.yaml', 'r') as stream:
+#     try:
+#         x=yaml.safe_load(stream)
+#         print(x)
+#     except yaml.YAMLError as exc:
+#         print(exc)
+

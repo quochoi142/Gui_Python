@@ -1,15 +1,21 @@
 import os
 import psutil
 
-def getAllTag():
+# def getAllTag():
+#     arr = []
+#     for file in os.listdir("/home/nguyenhung/.hatch/scripts"):
+#         if file.endswith(".ps1"):
+#             # print(file)     
+#             arr.append(file.split(".ps1")[0])      
+#     return arr
+
+def getAllfile(path, tag):
     arr = []
-    for file in os.listdir("/home/nguyenhung/.hatch/scripts"):
-        if file.endswith(".ps1"):
+    for file in os.listdir(path):
+        if file.endswith(tag):
             # print(file)     
-            arr.append(file.split(".ps1")[0])      
+            arr.append(file.split(tag)[0])      
     return arr
-
-
 
 
 def getRam():
@@ -31,10 +37,20 @@ import socket
 hostname = socket.gethostname()
 print(hostname)
 
+
 #get home directory
 import os
 homedir = os.environ['HOME']
 print(homedir)
+
+
+import netifaces as ni
+def getIp():
+    nets=ni.interfaces()
+    nets.remove('lo')
+    return ni.ifaddresses(nets[0])[ni.AF_INET][0]['addr']
+
+
 
 
 
