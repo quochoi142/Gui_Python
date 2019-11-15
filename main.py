@@ -6,6 +6,9 @@ def appear(win):
     while True:
         event, values= win.Read()
         win.Values=values
+        if win == scr[0] and event=='default_mode':
+            win.Values.default=True
+            return 1
         if event is None:            
             return 0
         elif event=='btn_next':
@@ -27,7 +30,7 @@ while 1:
     
     
     result=appear(scr[pos])
-    print(scr[0].Values)
+   
     if result == 0:
         break
     elif result==1:
