@@ -73,10 +73,10 @@ def generateConfig(content,name):
     #     ]
     # }
 
-    if os.path.isfile(etx.homedir+'/Desktop/' + name + '.yaml'):
-        os.remove(etx.homedir+'/Desktop/'+ name + '.yaml')
+    if os.path.isfile(etx.homedir + '/Desktop/' + name + '.yaml'):
+        os.remove(etx.homedir + '/Desktop/'+ name + '.yaml')
 
-    with open(etx.homedir+'/Desktop/' + name + '.yaml', 'w') as outfile:
+    with open(etx.homedir + '/Desktop/' + name + '.yaml', 'w') as outfile:
         try:
             # setup_yaml()
             # print(yaml.dump(content))

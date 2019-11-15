@@ -1,13 +1,14 @@
 import getpass
 import extensions as etx
 import generateConfig as gen
-lstOs = [
-    {'os': 'win7', 'name': 'windows7', 'arch':'x64', 'from': 10, 'to': 39},  
-    {'os': 'win10', 'name': 'windows10', 'arch':'x64', 'from': 100,'to': 129},
-    {'os': 'ws', 'name': 'windows7', 'arch':'x64', 'from': 70, 'to': 99}
 
+lstOs = [
+    {'os': 'win7', 'name': 'windows7', 'arch': 'x64', 'from': 10, 'to': 39, 'num': 0},
+    {'os': 'win10', 'name': 'windows10', 'arch': 'x64', 'from': 100, 'to': 129, 'num': 0},
+    {'os': 'ws', 'name': 'windows7', 'arch': 'x64', 'from': 70, 'to': 99, 'num': 0}
 ]
-    
+
+
 def config(scr):
     scr0 = scr[0].Values
     scr1 = scr[1].Values
@@ -18,12 +19,12 @@ def config(scr):
             os['num'] = scr0[os['os']+'_num']
     print(lstOs)
     for os in lstOs:
-        for i in range(1,os['num']+1):
-            id = os['os']+os['arch']+'v'+str(i)
-            content  = {}
-            user =  getpass.getuser()
-            content['Storage_dir']  =  etx.homedir+'/.hatch/vmdata/storage'
-            content['temp_dir'] = etx.homedir+'/.hatch/vmdata/scratch'
+        for i in range(1, os['num']+1):
+            id = os['os'] + os['arch'] + 'v' + str(i)
+            content = {}
+            user = getpass.getuser()
+            content['Storage_dir'] = etx.homedir + '/.hatch/vmdata/storage'
+            content['temp_dir'] = etx.homedir + '/.hatch/vmdata/scratch'
             content['data_dirs'] = ['./resources']
             content['script_dirs'] = ['./scripts']
             content['bridge'] = 'br0'
@@ -35,20 +36,16 @@ def config(scr):
             content['iso_file'] = 'win7ultimate.iso'
             content['machine'] = {
                 'cpu_cores': scr1[id + '_cpu'],
-                'memory': int(scr1[id + '_memory']) + 'G',
-                'disk': scr1[id + '_disk']
+                'memory': str(int(scr1[id+'_memory'])) + 'G',
+                'disk': str(scr1[id+'_disk']) + 'G'
             }
 
             content['instances'] = []
-            for j in range(1, scr1[id + '_instance']):
+            for j in range(1, scr1[id+'_instance'] + 1):
                 ins = {
-                    'ip':'10.6.0.' + str(os['from'] + j) + '/24',
+                    'ip': '10.6.0.'+str(os['from']+j) + '/24',
                     'interface': 'tap' + str(os['from'] + j),
                     'vnc_port': 11000 + os['from'] + j
                 }
                 content['instances'].append(ins)
             gen.generateConfig(content, id)
-
-    
-
-

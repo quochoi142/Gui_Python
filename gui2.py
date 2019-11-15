@@ -1,8 +1,8 @@
 import PySimpleGUI as sg
 import extensions as ext
 
-def createInstance(name,i):
-    nameVM=name+'x64v'+str(i)
+def createInstance(name, i):
+    nameVM = name + 'x64v' + str(i)
     return [sg.Text(text = nameVM, font = '#ff3399', size=(10, 0)),
             sg.Text('Ram(Gb)'),
             sg.Slider(range = (4, ext.getRam()), default_value = 4,
@@ -16,13 +16,6 @@ def createInstance(name,i):
             sg.Button('Reset', key = nameVM + '_btn_reset')]
     #[sg.Checkbox('a'), sg.Checkbox('a'), sg.Checkbox('a')]
 
-def createApp():
-    arr = []
-    # return [sg.Checkbox(1), sg.Checkbox(2), sg.Checkbox(3)]
-    for i in list(range(1, 31)):
-        arr.append(sg.Checkbox(i))
-    return arr
-
 
 # instances = []
 # for i in range(0, 4):
@@ -33,14 +26,14 @@ def createApp():
 #                   sg.Button('Next', key=('btn_next'))])
 
 class OS:
-    os= ''
+    os = ''
     num = 0
 
 def create(scr):
     instances = []
     values = scr[0].Values
     arr = []
-    lstOs =['win7','win10','ws']
+    lstOs = ['win7','win10','ws']
     for os in lstOs:
         if values[os] is True:
             x = OS()
@@ -49,7 +42,10 @@ def create(scr):
             arr.append(x) 
     for i in arr:
         for j in range(1, i.num + 1):
+            # nameVM = i.os + 'x64v' + str(j)
+            # lstVM = lstVM.append(nameVM)
             instances.append(createInstance(i.os ,j))
+        
         # instances.append(createApp())
 
     instances.append([sg.Button('Previous', key='btn_prev'),
@@ -59,3 +55,6 @@ def create(scr):
 
 def destroy():
     window.Close()
+
+lstVM = []
+
