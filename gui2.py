@@ -1,18 +1,19 @@
 import PySimpleGUI as sg
 import extensions as ext
 
-def createInstance(name):
-    return [sg.Text(text = name, font = '#ff3399', size=(10, 0)),
+def createInstance(name,i):
+    nameVM=name+'x64v'+str(i)
+    return [sg.Text(text = nameVM, font = '#ff3399', size=(10, 0)),
             sg.Text('Ram(Gb)'),
             sg.Slider(range = (4, ext.getRam()), default_value = 4,
-                      orientation = 'horizontal', size=(10, 10), key = name + '_ram'),
+                      orientation = 'horizontal', size=(10, 10), key = nameVM + '_memory'),
             sg.Text('CPU'),
-            sg.Combo(list(range(2, ext.getCPU() + 1)), default_value = 2, key = name + '_cpu'), 
+            sg.Combo(list(range(2, ext.getCPU() + 1)), default_value = 2, key = nameVM + '_cpu'), 
             sg.Text('Hard_disk(Gb)'), 
-            sg.InputText('256', size = (10, 30), key = name + '_memory'),
-            sg.Combo([1, 2, 3, 4], default_value = 1, key = name + '_instance'), 
-            sg.Button('Apps', key = name + '_btn_apps'),
-            sg.Button('Reset', key = name + '_btn_reset')]
+            sg.InputText('256', size = (10, 30), key = nameVM + '_disk'),
+            sg.Combo([1, 2, 3, 4], default_value = 1, key = nameVM + '_instance'), 
+            sg.Button('Apps', key = nameVM + '_btn_apps'),
+            sg.Button('Reset', key = nameVM + '_btn_reset')]
     #[sg.Checkbox('a'), sg.Checkbox('a'), sg.Checkbox('a')]
 
 def createApp():
@@ -48,7 +49,7 @@ def create(scr):
             arr.append(x) 
     for i in arr:
         for j in range(1, i.num + 1):
-            instances.append(createInstance(i.os + 'v' + str(j)))
+            instances.append(createInstance(i.os ,j))
         # instances.append(createApp())
 
     instances.append([sg.Button('Previous', key='btn_prev'),

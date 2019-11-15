@@ -25,7 +25,7 @@ def appear(win):
             # print(lstKeys)
             key = event.split('_')[0]
             print(key)           
-            lstValues = ['ram', 'cpu', 'memory', 'instance']
+            lstValues = ['memory', 'cpu', 'disk', 'instance']
             for value in lstValues:
                 if value in defaultValues.keys():
                     win.FindElement(key + '_' + value).Update(value = defaultValues[value])
@@ -37,9 +37,9 @@ def disappear(win):
 
 defaultBtnKeys = ['btn_next', 'btn_prev', 'btn_exit','btn_reset', 'btn_apps']
 defaultValues = {
-    'ram': 2,
+    'memory': 2,
     'cpu': 2,
-    'memory': 256,
+    'disk': 256,
     'instance': 1
 }
 
@@ -61,6 +61,9 @@ while 1:
                 scr[pos+1] = fac.createGui(pos + 1, scr)
             else: 
                 scr.append(fac.createGui(pos + 1, scr))  
+        elif pos==1:
+            gen.config(scr)
+            break
         #Others screen
         else:
             if pos+1 < len(scr):
