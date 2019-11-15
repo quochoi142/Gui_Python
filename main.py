@@ -6,6 +6,9 @@ def appear(win):
     while True:
         event, values= win.Read()
         win.Values=values
+        if win == scr[0] and event=='default_mode':
+            win.Values.default=True
+            return 1
         if event is None:            
             return 0
         elif event=='btn_next':
@@ -27,15 +30,22 @@ while 1:
     
     
     result=appear(scr[pos])
-    print(scr[0].Values)
+   
     if result == 0:
         break
     elif result==1:
-        
-        if pos+1 < len(scr):
-            scr[pos+1].UnHide()
-        else: 
-            scr.append(fac.createGui(pos+1,scr))  
+        #the first screen is Special-> create VM
+        if pos==0:
+            if pos+1 < len(scr):
+                scr[pos+1]=fac.createGui(pos+1,scr)
+            else: 
+                scr.append(fac.createGui(pos+1,scr))  
+        #Others screen
+        else:
+            if pos+1 < len(scr):
+                scr[pos+1].UnHide()
+            else: 
+                scr.append(fac.createGui(pos+1,scr))  
         scr[pos].Hide()   
         additive=1
     elif result==-1:  
