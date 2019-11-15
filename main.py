@@ -1,14 +1,11 @@
 import gui_Factory as fac 
-
+import getInforScreen as gen
 
 scr = []
 def appear(win):
     while True:
         event, values= win.Read()
         win.Values=values
-        if win == scr[0] and event=='default_mode':
-            win.Values.default=True
-            return 1
         if event is None:            
             return 0
         elif event=='btn_next':
@@ -40,6 +37,8 @@ while 1:
                 scr[pos+1]=fac.createGui(pos+1,scr)
             else: 
                 scr.append(fac.createGui(pos+1,scr))  
+        elif pos==1:
+            gen.config(scr)
         #Others screen
         else:
             if pos+1 < len(scr):
