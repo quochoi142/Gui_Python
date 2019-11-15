@@ -35,7 +35,7 @@ print("---")
 
 col = [checkBoxValue(tag) for tag in arrTag]
 layout = [[sg.Column(col, scrollable=True, vertical_scroll_only=True, justification="center")],
-          [sg.Cancel('Exit')]]
+          [sg.Cancel('btn_exit')]]
 window = sg.Window('test', layout, resizable=True)
 selectScripts = []
 
@@ -44,7 +44,7 @@ while True:
     # print(event, "-----",  values, "\n")
     if event is None: 
         break
-    if event == "Exit":
+    if event == "btn_exit":
         break
     if event in selectScripts:
         selectScripts.remove(event)
