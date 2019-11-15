@@ -37,12 +37,12 @@ def config(scr):
             content['iso_file']='win7ultimate.iso'
             content['machine']={
                 'cpu_cores': scr1[id+'_cpu'],
-                'memory': scr1[id+'_memory'],
-                'disk': scr1[id+'_disk']
+                'memory': str(int(scr1[id+'_memory']))+'G',
+                'disk': str(scr1[id+'_disk'])+'G'
             }
 
             content['instances']=[]
-            for j in range(1,scr1[id+'_instance']):
+            for j in range(1,scr1[id+'_instance']+1):
                 ins={
                     'ip':'10.6.0.'+str(os['from']+j)+'/24',
                     'interface': 'tap'+str(os['from']+j),
