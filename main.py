@@ -1,6 +1,7 @@
-import gui_Factory as fac
-import re
+import gui_Factory as fac 
+import getInforScreen as gen
 
+scr = []
 def appear(win):
     while True:
         event, values = win.Read()
