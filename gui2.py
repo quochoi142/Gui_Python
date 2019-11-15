@@ -16,33 +16,6 @@ def createInstance(name):
     #[sg.Checkbox('a'), sg.Checkbox('a'), sg.Checkbox('a')]
 
 def createApp():
-<<<<<<< HEAD
-    return [sg.Checkbox("a"), sg.Checkbox("a"), sg.Checkbox("a")]
-
-temp = [
-        [sg.Text("Ram"), sg.Combo([1,2,3,4],default_value=1), sg.Text("CPU"),
-         sg.InputText(), sg.Text("Hard_disk"), sg.InputText()],
-        [sg.Checkbox("a"), sg.Checkbox("a"), sg.Checkbox("a")],
-
-        [sg.Text("Ram"), sg.InputText(), sg.Text("CPU"),
-         sg.InputText(), sg.Text("Hard_disk"), sg.InputText()],
-        [sg.Checkbox("a"), sg.Checkbox("a"), sg.Checkbox("a")],
-
-        [sg.Text("Ram"), sg.InputText(), sg.Text("CPU"),
-         sg.InputText(), sg.Text("Hard_disk"), sg.InputText()],
-        [sg.Checkbox("a"), sg.Checkbox("a"), sg.Checkbox("a")]
-
-    ]
-
-instances = []
-for i in range(0,4):
-    instances.append(createInstance())
-    instances.append(createApp())
-
-window = sg.Window('SetInstant', instances)
-event, values = window.Read()
-window.Close()
-=======
     arr = []
     # return [sg.Checkbox(1), sg.Checkbox(2), sg.Checkbox(3)]
     for i in list(range(1, 31)):
@@ -85,4 +58,3 @@ def create(scr):
 
 def destroy():
     window.Close()
->>>>>>> origin/dev

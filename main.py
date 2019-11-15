@@ -29,8 +29,6 @@ def appear(win):
                 if value in defaultValues.keys():
                     win.FindElement(key + '_' + value).Update(value = defaultValues[value])
 
-
-       
 def disappear(win):
     win.Hide()
 
@@ -73,7 +71,7 @@ while 1:
         scr[pos-1].UnHide()   
         additive = -1
 
-    pos+=additive
+    pos += additive
    
 for element in scr:
     element.Close()
