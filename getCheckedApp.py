@@ -6,7 +6,6 @@ import PySimpleGUI as sg
 def getAllTags(arr):
     for file in os.listdir("/home/nguyenhung/.hatch/scripts"):
         if file.endswith(".ps1"):
-            # print(file)
             arr.append(file.split(".ps1")[0])
 
 def checkBoxValue(tag, lstApps):
@@ -21,7 +20,7 @@ def getApps(lstApps):
               [sg.Button('Done', key='btn_done')]]
     window = sg.Window('test', layout, resizable = True)
     selectScripts = lstApps
-    print(selectScripts)
+    # print(selectScripts)
 
     while True:
         event, values = window.Read()
@@ -42,13 +41,8 @@ def getApps(lstApps):
 arrTag = []
 getAllTags(arrTag)
 
-# print(len(arrTag))
-# print("---")
-# print(len(arrTag))
-# print("---")
-
 defaultScripts = [
-    'schtasks', 'setres', 'windows', 'windows7', 'wallpaper-fetch', 'cppredist',
+    'schtasks', 'setres', 'windows', 'windows7', 'windows10', 'windowsserver2016', 'wallpaper-fetch', 'cppredist',
                 'dotnet472', 'mscorsvw', 'schtasks', 'ps1logging', 'patchandgo', 'finalize'
 ]
 
@@ -56,7 +50,5 @@ for script in defaultScripts:
     if script in arrTag:
         arrTag.remove(script)
 
-print(len(arrTag))
-print("---")
 
 

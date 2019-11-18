@@ -16,15 +16,6 @@ def createInstance(name, i):
             sg.Button('Reset', key = nameVM + '_btn_reset')]
     #[sg.Checkbox('a'), sg.Checkbox('a'), sg.Checkbox('a')]
 
-
-# instances = []
-# for i in range(0, 4):
-#     instances.append(createInstance())
-#     # instances.append(createApp())
-
-# instances.append([sg.Button('Previous', key='btn_prev'),
-#                   sg.Button('Next', key=('btn_next'))])
-
 class OS:
     os = ''
     num = 0
@@ -44,10 +35,9 @@ def create(scr):
         for j in range(1, i.num + 1):
             # nameVM = i.os + 'x64v' + str(j)
             # lstVM = lstVM.append(nameVM)
-            instances.append(createInstance(i.os ,j))
+            instances.append(createInstance(i.os, j))
         
         # instances.append(createApp())
-
     instances.append([sg.Button('Previous', key='btn_prev'),
                     sg.Button('Next', key=('btn_next'))])
     window = sg.Window('SetInstant', instances)

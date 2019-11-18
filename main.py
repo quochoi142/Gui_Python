@@ -2,12 +2,11 @@ import gui_Factory as fac
 import getInforScreen as gen
 import getCheckedApp as app
 
-
 def appear(win, lstApp):
     while True:
         event, values = win.Read()
         win.Values = values
-        print(values)
+        # print(values)
         if event is not None:
             key = event.split('_')[0]
         # print(key)
@@ -22,30 +21,17 @@ def appear(win, lstApp):
                 lstApps[key] = app.getApps(lstApps[key])
             else:
                 lstApps[key] = app.getApps([])
-            scr[1].lstApps = lstApps
-            print(lstApps)
+            win.lstApps = lstApps
         elif 'btn_reset' in event:
-            print('reset')
-            # disable btn
-            # lstKeys = list(win.AllKeysDict.keys())
-            # for key in lstKeys:
-            #     if key in defaultBtnKeys or any(btnKey in key for btnKey in defaultBtnKeys):
-            #         lstKeys.remove(key)
-            #     else:
-            #         win.FindElement(key).Update(disabled=True)
-            # print(lstKeys)
             lstValues = ['memory', 'cpu', 'disk', 'instance']
             for value in lstValues:
                 if value in defaultValues.keys():
                     win.FindElement(
-                        key + '_' + value).Update(value=defaultValues[value])
-                    print(lstApps)
+                        key + '_' + value).Update(value = defaultValues[value])
             del lstApps[key]
-
 
 def disappear(win):
     win.Hide()
-
 
 defaultBtnKeys = ['btn_next', 'btn_prev', 'btn_exit', 'btn_reset', 'btn_apps']
 defaultValues = {
@@ -71,13 +57,14 @@ while 1:
     elif result == 1:
         # the first screen is Special-> create VM
         if pos == 0:
-            if pos+1 < len(scr):
+            if pos + 1 < len(scr):
                 scr[pos+1] = fac.createGui(pos + 1, scr)
             else:
                 scr.append(fac.createGui(pos + 1, scr))
         elif pos == 1:
+            scr[pos].lstApps = lstApps
             gen.config(scr)
-            print(scr[pos].lstApps)
+            # print(scr[pos].lstApps)
             break
         # Others screen
         else:
