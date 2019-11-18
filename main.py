@@ -2,10 +2,11 @@ import gui_Factory as fac
 import getInforScreen as gen
 import getCheckedApp as app
 
-def appear(win, lstApp):
+def appear(win):
     while True:
         event, values = win.Read()
         win.Values = values
+        lstApps = win.lstApps
         # print(values)
         if event is not None:
             key = event.split('_')[0]
@@ -47,9 +48,11 @@ pos = 0
 scr.append(fac.createGui(pos, scr))
 
 while 1:
+    # print('start')
     lstApps = {}
     additive = 0
-    result = appear(scr[pos], lstApps)
+    scr[pos].lstApps = lstApps
+    result = appear(scr[pos])
     # print(scr[0].Values)
 
     if result == 0:
@@ -79,6 +82,7 @@ while 1:
         scr[pos-1].UnHide()
         additive = -1
     pos += additive
+    # print('end')
 
 for element in scr:
     element.Close()

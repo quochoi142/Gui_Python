@@ -4,18 +4,20 @@ import generateConfig as gen
 
 lstOs = [
     {'os': 'win7', 'name': 'windows7', 'arch': 'x64', 'from': 10, 'to': 39, 'num': 0},
-    {'os': 'win10', 'name': 'windows10', 'arch': 'x64', 'from': 100, 'to': 129, 'num': 0},
-    {'os': 'ws', 'name': 'windowsserver2016', 'arch': 'x64', 'from': 70, 'to': 99, 'num': 0}
+    {'os': 'win10', 'name': 'windows10', 'arch': 'x64',
+        'from': 100, 'to': 129, 'num': 0},
+    {'os': 'ws', 'name': 'windowsserver2016',
+        'arch': 'x64', 'from': 70, 'to': 99, 'num': 0}
 ]
 
 
 def config(scr):
     scr0 = scr[0].Values
     scr1 = scr[1].Values
-    lstAppsDefault =  ['schtasks', 'setres', 'windows', 'wallpaper-fetch', 'cppredist',
-                'dotnet472', 'mscorsvw', 'schtasks', 'ps1logging', 'patchandgo', 'finalize']
+    lstAppsDefault = ['schtasks', {'name':'setres', 'var':{'width': 1280, 'height': 720}}, 'windows', 'wallpaper-fetch', 'cppredist',
+                      'dotnet472', 'mscorsvw', 'schtasks', 'ps1logging', 'patchandgo', 'finalize']
     lstApps = scr[1].lstApps
-    print(lstApps)
+    # print(lstApps)
     for os in lstOs:
         # print(scr0[os['os']])
         if scr0[os['os']] == True:
@@ -46,13 +48,17 @@ def config(scr):
             if id in lstApps.keys():
                 lstApps[id].extend(lstAppsDefault)
             else:
-                lstApps[id] = lstAppsDefault
+                lstApps[id] = lstAppsDefault[:]
+            print(lstApps[id])
             lstApps[id].append(os['name'])
-            print(lstApps)
+            # print(lstApps)
             content['scripts'] = []
             for app in lstApps[id]:
                 # print(app)
-                content['scripts'].append({'name': app})
+                if isinstance(app, dict):
+                    content['scripts'].append(app)
+                else:
+                    content['scripts'].append({'name': app})
             content['instances'] = []
             for j in range(1, scr1[id+'_instance'] + 1):
                 ins = {
@@ -62,4 +68,4 @@ def config(scr):
                 }
                 content['instances'].append(ins)
             gen.generateConfig(content, id)
-            print(content)
+            # print(content)
