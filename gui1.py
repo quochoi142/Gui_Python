@@ -15,7 +15,7 @@ layout = [
     # [sg.Submit('Default', key = 'btn_default')],
     [sg.Submit('Next', key = 'btn_next')]
 ]
-
+    # print(selectScripts)
 def create(scr):
     window = sg.Window('Config', layout)
     return window
