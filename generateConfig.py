@@ -24,19 +24,33 @@ def configData():
         'receiver': ':41234',
         'display_addr':etx.getIp()
     }
-    content['machines']=[]
-    VMs=etx.getAllfile(etx.homedir+'/.hatch/config','.yaml')
+    content['machinery']=[]
+   # content['machinery'].append()
+    machine={
+        'platform':'qemu',
+        'interface': 'br0',
+        'ip': '10.6.0.1'}
+    machine['machines']={}
+    VMs=etx.getAllfile(etx.homedir+'/.hatch/vmdata/storage','.yaml')
     for vm in VMs:
-        temp={}
-        temp['conf']=etx.homedir+'/.hatch/vmdata/storage/'+vm+'/instance_0.vm'
-        temp['tags']=
+        if os.path.exists(etx.homedir+'/.hatch/vmdata/storage/'+vm+'/instance_0.vm'):
+            temp={}
+            temp['conf']=etx.homedir+'/.hatch/vmdata/storage/'+vm+'/instance_0.vm'
+            temp['tags']=parseYaml(etx.homedir+'/.hatch/vmdata/storage/'+vm+'.yaml')
+            temp['tags'].append('x64')
+            machine['machines'][vm]=temp
+    content['machinery'].append(machine)
+    return content
+    
 
 
+def parseYaml(path):
+    with open(path, 'r') as stream:
+        try:
+            x=yaml.safe_load(stream)
+            return x['tags']
+        except yaml.YAMLError as exc:
+            print(exc)
 
-# with open('/home/hoivu/.hatch/data/sandbox.yaml', 'r') as stream:
-#     try:
-#         x=yaml.safe_load(stream)
-#         print(x)
-#     except yaml.YAMLError as exc:
-#         print(exc)
-
+x=configData()
+generateConfig(x,'sandbox')
