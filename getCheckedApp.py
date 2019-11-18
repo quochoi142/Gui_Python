@@ -1,10 +1,11 @@
 import os
 import psutil
 import PySimpleGUI as sg
+import extensions as etx
 
 
 def getAllTags(arr):
-    for file in os.listdir("/home/nguyenhung/.hatch/scripts"):
+    for file in os.listdir(etx.homedir+"/.hatch/scripts"):
         if file.endswith(".ps1"):
             arr.append(file.split(".ps1")[0])
 

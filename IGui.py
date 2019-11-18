@@ -2,5 +2,8 @@ class IGui:
     def __init__(self):
         pass
 
-    def getGui():
+    def getGui(self):
+        pass
+
+    def listen(self):
         pass

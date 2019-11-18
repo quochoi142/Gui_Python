@@ -62,4 +62,4 @@ def config(scr):
                 }
                 content['instances'].append(ins)
             gen.generateConfig(content, id)
-            print(content)
+            # print(content)
