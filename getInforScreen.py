@@ -49,7 +49,6 @@ def config(scr):
                 lstApps[id].extend(lstAppsDefault)
             else:
                 lstApps[id] = lstAppsDefault[:]
-            print(lstApps[id])
             lstApps[id].append(os['name'])
             # print(lstApps)
             content['scripts'] = []
