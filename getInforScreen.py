@@ -46,7 +46,7 @@ def config(scr):
             if id in lstApps.keys():
                 lstApps[id].extend(lstAppsDefault)
             else:
-                lstApps[id] = lstAppsDefault
+                lstApps[id] = lstAppsDefault[:]
             lstApps[id].append(os['name'])
             print(lstApps)
             content['scripts'] = []

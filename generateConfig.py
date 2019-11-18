@@ -57,5 +57,4 @@ def parseYaml(path):
         except yaml.YAMLError as exc:
             print(exc)
 
-x=configData()
-generateConfig(x,'sandbox')
+

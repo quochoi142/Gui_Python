@@ -1,5 +1,5 @@
 import gui_Factory as fac
-#import getInforScreen as gen
+import getInforScreen as gen
 #import getCheckedApp as app
 
 # def appear(win):
