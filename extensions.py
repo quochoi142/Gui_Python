@@ -30,18 +30,18 @@ def getDisk_Usage():
 #get username
 import getpass
 username = getpass.getuser()
-print(username)
+
 
 #get hostname
 import socket
 hostname = socket.gethostname()
-print(hostname)
+
 
 
 #get home directory
 import os
 homedir = os.environ['HOME']
-print(homedir)
+
 
 
 import netifaces as ni
