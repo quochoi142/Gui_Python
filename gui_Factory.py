@@ -1,5 +1,5 @@
-import gui1
-import gui2
+import CreateVMsGui as gui1
+import ConfigVMsGui as gui2
 
 def createGui(i, scr):   
     if i == 0:
