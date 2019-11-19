@@ -64,9 +64,10 @@ while 1:
             else:
                 scr.append(fac.createGui(pos + 1, scr))
         elif pos == 1:
-            gen.config(scr)
-            # print(scr[pos].lstApps)
             break
+            #gen.config(scr)
+        #     # print(scr[pos].lstApps)
+        #     break
         # Others screen
         else:
             if pos + 1 < len(scr):

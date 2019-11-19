@@ -4,7 +4,7 @@ import getpass
 import extensions as etx
 from collections import OrderedDict
 
-# with open("/home/hoivu/Desktop/hoi.yaml", 'r') as stream:
+# with open("/home/hoivu/.hatch/hoi.yaml", 'r') as stream:
 #     try:
 #         x=yaml.safe_load(stream)
 #         print(x)
@@ -12,10 +12,10 @@ from collections import OrderedDict
 #         print(exc)
 
 def generateConfig(content,name):
-    if os.path.isfile(etx.homedir + '/Desktop/' + name + '.yaml'):
-        os.remove(etx.homedir + '/Desktop/'+ name + '.yaml')
+    if os.path.isfile(etx.homedir + '/.hatch/' + name + '.yaml'):
+        os.remove(etx.homedir + '/.hatch/'+ name + '.yaml')
 
-    with open(etx.homedir + '/Desktop/' + name + '.yaml', 'w') as outfile:
+    with open(etx.homedir + '/.hatch/' + name + '.yaml', 'w') as outfile:
         try:
             yaml.dump(content, outfile, default_flow_style=False)
         except yaml.YAMLError as exc:
@@ -45,7 +45,7 @@ def configData():
             temp['tags'].append('x64')
             machine['machines'][vm]=temp
     content['machinery'].append(machine)
-    return content
+    generateConfig(content,'data/sandbox')
     
 
 

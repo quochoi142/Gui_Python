@@ -1,5 +1,7 @@
 import os
 import psutil
+import getInforScreen as genYaml
+import generateConfig as gen
 
 # def getAllTag():
 #     arr = []
@@ -49,6 +51,21 @@ def getIp():
     nets=ni.interfaces()
     nets.remove('lo')
     return ni.ifaddresses(nets[0])[ni.AF_INET][0]['addr']
+
+
+import subprocess
+def install(scr):
+    subprocess.call("./Intall/Step1.sh")
+    genYaml.config(scr)
+    subprocess.call("./Intall/Step2.sh")
+    gen.configData()
+    subprocess.call("./Intall/Step3.sh")
+    #### Create account Postgres
+    subprocess.call("./Intall/Step4.sh")
+
+
+
+
 
 
 
