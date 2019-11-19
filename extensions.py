@@ -51,6 +51,6 @@ def getIp():
     return ni.ifaddresses(nets[0])[ni.AF_INET][0]['addr']
 
 
-
+print(getIp())
 
 

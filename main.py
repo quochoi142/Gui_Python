@@ -80,6 +80,7 @@ while 1:
         scr[pos-1].getGui().UnHide()
         additive = -1
     pos += additive
+    # print('end')
 
 for element in scr:
     element.getGui().Close()
