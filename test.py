@@ -1,8 +1,3 @@
-
-# import PySimpleGUI as sg
-
-# print(sg.ListOfLookAndFeelValues())
-import subprocess
-subprocess.call("./test1.sh",shell=True)
-
-
+PI = 3.14
+PI=2
+print(PI)

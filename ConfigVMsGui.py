@@ -74,8 +74,10 @@ class ConfigVMsGui(IGui):
                 arr.append(x)
         for i in arr:
             for j in range(1, i.num + 1):
-                if any('office' in item for item in self.lstApps[i.os + 'x64v' + str(j)]):
-                    return True
+                key=i.os + 'x64v' + str(j)
+                if key in self.lstApps:
+                    if any('office' in item for item in self.lstApps[key]):
+                        return True
         return False
 
     def listen(self):

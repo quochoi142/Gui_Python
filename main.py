@@ -1,5 +1,5 @@
 import gui_Factory as fac
-import getInforScreen as gen
+import extensions as etx
 #import getCheckedApp as app
 
 # def appear(win):
@@ -64,6 +64,7 @@ while 1:
             else:
                 scr.append(fac.createGui(pos + 1, scr))
         elif pos == 1:
+            etx.install(scr)
             break
             #gen.config(scr)
         #     # print(scr[pos].lstApps)

@@ -58,7 +58,7 @@ def install(scr):
     subprocess.call("./Intall/Step1.sh")
     genYaml.config(scr)
     subprocess.call("./Intall/Step2.sh")
-    gen.configData()
+    #gen.configData()
     subprocess.call("./Intall/Step3.sh")
     #### Create account Postgres
     subprocess.call("./Intall/Step4.sh")
