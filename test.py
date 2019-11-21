@@ -52,5 +52,9 @@ def validateInput(input):
 import sys
 import tty
 tty.setcbreak(sys.stdin)
+
 while True:
     print ord(sys.stdin.read(1))
+PI = 3.14
+PI=2
+print(PI)
