@@ -62,7 +62,7 @@ def install(scr):
     subprocess.call("./Intall/Step4.sh")
 
 
-
+# print(getDisk_Usage())
 
 
 

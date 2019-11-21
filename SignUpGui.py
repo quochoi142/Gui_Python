@@ -31,7 +31,6 @@ class SignUpGui(IGui):
         return self.window
 
     def listen(self):
-        
         while True:
             event, values = self.window.Read()
             if event is None:

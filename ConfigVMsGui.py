@@ -9,18 +9,20 @@ import getch
 from LicenseGui import LicenseGui
 import getpass
 
+
 def createInstance(name, i):
     nameVM = name + 'x64v' + str(i)
     return [sg.Text(text=nameVM, font='#ff3399', size=(10, 0)),
             sg.Text('Ram(Gb)'),
             sg.Slider(range=(4, ext.getRam()), default_value=4, orientation='horizontal', size=(10, 10), key=nameVM + '_memory'),
             sg.Text('CPU'),
-            sg.Combo(list(range(2, ext.getCPU() + 1)), default_value=2, key=nameVM + '_cpu'),
+            sg.Combo(list(range(2, ext.getCPU() + 1)),default_value=2, key=nameVM + '_cpu'),
             sg.Text('Hard_disk(Gb)'),
-            sg.InputText('256', size=(10, 30), key=nameVM + '_disk' ,enable_events=True),
+            sg.InputText('256', size=(10, 30), key=nameVM + '_disk', enable_events=True),
             sg.Combo([1, 2, 3, 4], default_value=1, key=nameVM + '_instance'),
             sg.Button('Apps', key=nameVM + '_btn_apps'),
             sg.Button('Reset', key=nameVM + '_btn_reset')]
+
 
 class OS:
     os = ''
@@ -35,10 +37,11 @@ defaultValues = {
 }
 lstOs = ['win7', 'win10', 'ws']
 
+
 class ConfigVMsGui(IGui):
     def __init__(self, scr):
         instances = []
-        self.temp=values = scr[0].Values
+        self.temp = values = scr[0].Values
         arr = []
         for os in lstOs:
             if values[os] is True:
@@ -62,43 +65,57 @@ class ConfigVMsGui(IGui):
         return self.window
 
     def __check__(self):
+        # print('in check function')
         values = self.temp
-
+        configValues = self.Values
         arr = []
         for os in lstOs:
             if values[os] is True:
                 x = OS()
                 x.os = os
                 x.num = values[os + '_num']
+                # print(x)
                 arr.append(x)
         for i in arr:
+            print(i.num)
             for j in range(1, i.num + 1):
-                key=i.os + 'x64v' + str(j)
+                key = i.os + 'x64v' + str(j)
+                print(self.lstApps)
                 if key in self.lstApps:
+                    if float(configValues[key + '_disk']) > ext.getDisk_Usage():
+                    #     print(configValues[key + '_disk'])
+                    #     print('false')
+                        return False
                     if any('office' in item for item in self.lstApps[key]):
-                        return True
+                        # print('go license')
+                        # return True
+                        self.lstLicenses.append(key)
+        # print('out check function')
+        if self.lstLicenses:
+            return True
         return False
 
     def listen(self):
         value = {}
+        self.lstLicenses = []
         while True:
             event, values = self.window.Read()
             self.Values = values
-            # print(values)
             lstApps = self.lstApps
-            # print(values)
             if event is not None:
                 key = event.split('_')[0]
-            # print(key)
             if event is None:
                 return 0
             elif event == 'btn_next':
+                print('event == btn_next')
                 if self.__check__() == True:
-                    self.license=LicenseGui()
-                    if self.license.listen()==1:
+                    # print(self.__check__)
+                    print('pass')
+                    print(self.lstLicenses)
+                    self.license = LicenseGui(self.lstLicenses)
+                    if self.license.listen() == 1:
                         self.license.getGui().Close()
                         return 1
-                
             elif event == 'btn_prev':
                 return -1
             elif 'btn_apps' in event:
@@ -112,14 +129,10 @@ class ConfigVMsGui(IGui):
                 for value in lstValues:
                     if value in defaultValues.keys():
                         self.window.FindElement(key + '_' + value).Update(value=defaultValues[value])
-                del lstApps[key]
+                if lstApps:        
+                    del lstApps[key]
             elif '_disk' in event:
                 machine = key + '_disk'
-                # try: 
-                #     char = int(getpass.getpass())
-                #     print('pass')
-                # except ValueError:
-                #     print('Please enter a number')
                 n = len(values[machine])
                 char = keyboard.read_key()
                 value[machine] = values[machine][:n]
@@ -130,7 +143,7 @@ class ConfigVMsGui(IGui):
                 elif char == 'backspace':
                     value[machine] = value[machine][:n]
                     print(value[machine])
-                else: 
+                else:
                     value[machine] = value[machine][:n-1]
                     print(value[machine])
                 self.window.FindElement(machine).Update(value[machine])

@@ -2,15 +2,22 @@ import PySimpleGUI as sg
 from IGui import IGui
 
 class LicenseGui(IGui):
-    def __init__(self):
-        layout = [
-            [sg.Text("Please fill in License key software")],
-            [
-                sg.InputText("", size=(50, 10),key='key')
-            ],
-            [sg.Button("Done", key="btn_done"),
+    def __init__(self, lstLicenses):
+        print('license gui:', )
+        layout = [[sg.Text("Please fill in License key software")]]
+        row = []
+        for machine in lstLicenses:
+            print(machine)
+            row = [
+                [sg.Text(machine)],
+                [
+                    sg.InputText("", size=(50, 10),key='key')
+                ]
             ]
-        ]
+            layout += row
+            row = []
+        layout += [[sg.Button("Done", key="btn_done")]]
+        # print(layout)
         self.window = sg.Window('Lisence key', layout)
 
     def getGui(self):
