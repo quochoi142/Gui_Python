@@ -38,7 +38,6 @@ def getApps(lstApps):
     # print(selectScripts)
     return selectScripts
 
-
 arrTag = []
 getAllTags(arrTag)
 

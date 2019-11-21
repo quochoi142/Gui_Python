@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from IGui import IGui
 
 # layout = [
 #     [sg.Checkbox('Windows 7', default=True, key = 'win7', size=(15, 10)),
@@ -24,8 +25,6 @@ import PySimpleGUI as sg
 # def destroy():
 #     window.Close()
 
-
-from IGui import IGui
 class CreateVMsGui(IGui):
     def __init__(self):
         layout = [
@@ -52,8 +51,6 @@ class CreateVMsGui(IGui):
         while True:
             event, values = self.window.Read()
             self.Values = values
-        
-        
             if event is None:
                 return 0
             elif event == 'btn_next':

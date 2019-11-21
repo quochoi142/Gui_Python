@@ -39,11 +39,9 @@ import socket
 hostname = socket.gethostname()
 
 
-
 #get home directory
 import os
 homedir = os.environ['HOME']
-
 
 
 import netifaces as ni
@@ -53,9 +51,6 @@ def getIp():
     return ni.ifaddresses(nets[0])[ni.AF_INET][0]['addr']
 
 
-<<<<<<< HEAD
-print(getIp())
-=======
 import subprocess
 def install(scr):
     subprocess.call("./Intall/Step1.sh")
@@ -72,6 +67,5 @@ def install(scr):
 
 
 
->>>>>>> origin/hoi
 
 

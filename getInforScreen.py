@@ -4,12 +4,9 @@ import generateConfig as gen
 
 lstOs = [
     {'os': 'win7', 'name': 'windows7', 'arch': 'x64', 'from': 10, 'to': 39, 'num': 0},
-    {'os': 'win10', 'name': 'windows10', 'arch': 'x64',
-        'from': 100, 'to': 129, 'num': 0},
-    {'os': 'ws', 'name': 'windowsserver2016',
-        'arch': 'x64', 'from': 70, 'to': 99, 'num': 0}
+    {'os': 'win10', 'name': 'windows10', 'arch': 'x64', 'from': 100, 'to': 129, 'num': 0},
+    {'os': 'ws', 'name': 'windowsserver2016', 'arch': 'x64', 'from': 70, 'to': 99, 'num': 0}
 ]
-
 
 def config(scr):
     scr0 = scr[0].Values
