@@ -3,15 +3,15 @@ from IGui import IGui
 
 class LicenseGui(IGui):
     def __init__(self, lstLicenses):
-        print('license gui:', )
+        # print('license gui:', )
         layout = [[sg.Text("Please fill in License key software")]]
         row = []
         for machine in lstLicenses:
-            print(machine)
+            # print(machine)
             row = [
                 [sg.Text(machine)],
                 [
-                    sg.InputText("", size=(50, 10),key='key')
+                    sg.InputText("", size=(50, 10),key=f'{machine}_key')
                 ]
             ]
             layout += row

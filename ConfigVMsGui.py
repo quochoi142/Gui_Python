@@ -107,11 +107,10 @@ class ConfigVMsGui(IGui):
             if event is None:
                 return 0
             elif event == 'btn_next':
-                print('event == btn_next')
+                # print('event == btn_next')
                 if self.__check__() == True:
                     # print(self.__check__)
-                    print('pass')
-                    print(self.lstLicenses)
+                    # print(self.lstLicenses)
                     self.license = LicenseGui(self.lstLicenses)
                     if self.license.listen() == 1:
                         self.license.getGui().Close()
@@ -139,10 +138,10 @@ class ConfigVMsGui(IGui):
                 if char.isdigit():
                     # print(value[machine])
                     # value[machine] += char
-                    print(value[machine])
+                    # print(value[machine])
                 elif char == 'backspace':
                     value[machine] = value[machine][:n]
-                    print(value[machine])
+                    # print(value[machine])
                 else:
                     value[machine] = value[machine][:n-1]
                     print(value[machine])
@@ -151,3 +150,7 @@ class ConfigVMsGui(IGui):
                 #         self.window.FindElement(
                 #             key + '_' + value).Update(value=defaultValues[value])
                 # del lstApps[key]
+# if float(configValues[key + '_disk']) > ext.getDisk_Usage():
+                    #     print(configValues[key + '_disk'])
+                    #     print('false')
+                    #     return False
