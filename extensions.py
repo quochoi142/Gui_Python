@@ -1,3 +1,7 @@
+import subprocess
+import netifaces as ni
+import socket
+import getpass
 import os
 import psutil
 import getInforScreen as genYaml
@@ -7,65 +11,55 @@ import generateConfig as gen
 #     arr = []
 #     for file in os.listdir("/home/nguyenhung/.hatch/scripts"):
 #         if file.endswith(".ps1"):
-#             # print(file)     
-#             arr.append(file.split(".ps1")[0])      
+#             # print(file)
+#             arr.append(file.split(".ps1")[0])
 #     return arr
+
 
 def getAllfile(path, tag):
     arr = []
     for file in os.listdir(path):
         if file.endswith(tag):
-            # print(file)     
-            arr.append(file.split(tag)[0])      
+            # print(file)
+            arr.append(file.split(tag)[0])
     return arr
 
 
 def getRam():
     return int(psutil.virtual_memory()[0]/(1000**3))
 
+
 def getCPU():
     return int(psutil.cpu_count())
 
-def getDisk_Usage():
-    return round(psutil.disk_usage("/")[2]/(1000**3),1)
 
-#get username
-import getpass
+def getDisk_Usage():
+    return round(psutil.disk_usage("/")[2]/(1000**3), 1)
+
+
+# get username
 username = getpass.getuser()
 
 
-#get hostname
-import socket
+# get hostname
 hostname = socket.gethostname()
 
 
-#get home directory
-import os
+# get home directory
 homedir = os.environ['HOME']
 
 
-import netifaces as ni
 def getIp():
-    nets=ni.interfaces()
+    nets = ni.interfaces()
     nets.remove('lo')
     return ni.ifaddresses(nets[0])[ni.AF_INET][0]['addr']
 
 
-import subprocess
 def install(scr):
     subprocess.call("./Intall/Step1.sh")
     genYaml.config(scr)
     subprocess.call("./Intall/Step2.sh")
-    #gen.configData()
+    # gen.configData()
     subprocess.call("./Intall/Step3.sh")
-    #### Create account Postgres
+    # Create account Postgres
     subprocess.call("./Intall/Step4.sh")
-
-
-# print(getDisk_Usage())
-
-
-
-
-
-
