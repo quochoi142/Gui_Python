@@ -11,6 +11,9 @@ from collections import OrderedDict
 #     except yaml.YAMLError as exc:
 #         print(exc)
 
+def definePath():
+    return '/.hatch/' + name
+    
 
 def generateConfig(content,name):
     if os.path.isfile(etx.homedir + '/.hatch/' + name + '.yaml'):
@@ -21,7 +24,6 @@ def generateConfig(content,name):
             yaml.dump(content, outfile, default_flow_style=False)
         except yaml.YAMLError as exc:
             print(exc)
-
 
 def configData():
     content = {}
@@ -49,8 +51,6 @@ def configData():
             machine['machines'][vm] = temp
     content['machinery'].append(machine)
     generateConfig(content,'data/sandbox')
-    
-
 
 def parseYaml(path):
     with open(path, 'r') as stream:

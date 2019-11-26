@@ -48,8 +48,6 @@ pos = 0
 scr.append(fac.createGui(pos, scr))
 
 while 1:
-
-    
     additive = 0
     result =  scr[pos].listen()#appear(scr[pos])
     # print(scr[0].Values)

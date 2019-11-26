@@ -25,7 +25,7 @@ def getApps(lstApps):
 
     while True:
         event, values = window.Read()
-        # print(event, "-----",  values, "\n")
+        print(event, "-----",  values, "\n")
         if event is None:
             break
         if event == "btn_done":
@@ -33,11 +33,17 @@ def getApps(lstApps):
         if event in selectScripts:
             selectScripts.remove(event)
         else:
+            if 'office' in event:
+                office = []
+                office = [item for item in selectScripts if 'office' in item]
+                for item in office:
+                    window.FindElement(item).Update(value=False)
+                    selectScripts.remove(item)
             selectScripts.append(event)
+            
     window.Close()
     # print(selectScripts)
     return selectScripts
-
 
 arrTag = []
 getAllTags(arrTag)

@@ -1,8 +1,3 @@
-import subprocess as sp
-import string
-p=sp.run('echo 1 | sudo -S echo 1', shell=True,stdout=sp.PIPE,stderr=sp.PIPE)
-print(p.stderr)
-print(p.stdout)
 import PySimpleGUI as sg
 import re
 
@@ -57,5 +52,9 @@ def validateInput(input):
 import sys
 import tty
 tty.setcbreak(sys.stdin)
+
 while True:
     print ord(sys.stdin.read(1))
+PI = 3.14
+PI=2
+print(PI)

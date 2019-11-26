@@ -1,30 +1,32 @@
 import PySimpleGUI as sg
 from IGui import IGui
 
-
-
-
 class LicenseGui(IGui):
-    def __init__(self):
-        layout = [
-            [sg.Text("Please fill in License key software")],
-            [
-                sg.InputText("", size=(50, 10),key='key')
-            ],
-            [sg.Button("Done", key="btn_done"),
+    def __init__(self, lstLicenses):
+        # print('license gui:', )
+        layout = [[sg.Text("Please fill in License key software")]]
+        row = []
+        for machine in lstLicenses:
+            # print(machine)
+            row = [
+                [sg.Text(machine)],
+                [
+                    sg.InputText("", size=(50, 10),key=f'{machine}_key')
+                ]
             ]
-        ]
+            layout += row
+            row = []
+        layout += [[sg.Button("Done", key="btn_done")]]
+        # print(layout)
         self.window = sg.Window('Lisence key', layout)
 
     def getGui(self):
         return self.window
 
     def listen(self):
-       
         while True:
             event, values = self.window.Read()
             self.Values = values
-
             if event is None:
                 return 0
             elif event == 'btn_done':
@@ -35,6 +37,5 @@ class LicenseGui(IGui):
 
 
 # win = LicenseGui()
-
 # if win.listen() == 0:
 #     win.getGui().Close()
