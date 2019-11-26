@@ -1,6 +1,6 @@
 import CreateVMsGui as gui1
 import ConfigVMsGui as gui2
-import SignUpGui as gui3
+import CreateAccountGui as gui3
 import ProgressBarGui as gui4
 
 def createGui(i, scr):
@@ -9,7 +9,7 @@ def createGui(i, scr):
     elif i == 1:
         return gui2.ConfigVMsGui(scr)
     elif i == 2: 
-        return gui3.SignUpGui(scr)
+        return gui3.CreateAccountGui(scr)
     elif i == 3:
         return gui4.ProgressBarGui(scr)
     else:
