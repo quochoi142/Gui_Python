@@ -2,13 +2,10 @@ import getCheckedApp as app
 from IGui import IGui
 import PySimpleGUI as sg
 import extensions as ext
-<<<<<<< HEAD
-=======
 import re
-from getkey import getkey, keys, platform
+#from getkey import getkey, keys, platform
 import keyboard
-import getch
->>>>>>> origin/dev
+#import getch
 from LicenseGui import LicenseGui
 import getpass
 
@@ -23,12 +20,8 @@ def createInstance(name, i):
             sg.Combo(list(range(2, ext.getCPU() + 1)),
                      default_value=2, key=nameVM + '_cpu'),
             sg.Text('Hard_disk(Gb)'),
-<<<<<<< HEAD
-            sg.InputText('256', size=(10, 30), key=nameVM + '_disk'),
-=======
             sg.InputText('256', size=(10, 30), key=nameVM +
                          '_disk', enable_events=True),
->>>>>>> origin/dev
             sg.Combo([1, 2, 3, 4], default_value=1, key=nameVM + '_instance'),
             sg.Button('Apps', key=nameVM + '_btn_apps'),
             sg.Button('Reset', key=nameVM + '_btn_reset')]
@@ -45,10 +38,6 @@ defaultValues = {
     'disk': 256,
     'instance': 1
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/dev
 lstOs = ['win7', 'win10', 'ws']
 
 
@@ -68,11 +57,7 @@ class ConfigVMsGui(IGui):
                 instances.append(createInstance(i.os, j))
         instances.append([sg.Button('Previous', key='btn_prev'),
                           sg.Button('Next', key=('btn_next'))])
-<<<<<<< HEAD
-        self.window = sg.Window('SetInstant', instances, return_keyboard_events=True)
-=======
         self.window = sg.Window('SetInstant', instances)
->>>>>>> origin/dev
         self.lstApps = {}
 
     def getGui(self):

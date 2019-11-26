@@ -37,7 +37,8 @@ class ProgressBarGui(IGui):
         self.progress=0
         self.scr=scr
         self.done=False
-
+        self.err=False
+        
     def getGui(self):
         return self.window
 
@@ -47,7 +48,7 @@ class ProgressBarGui(IGui):
         # permission
         p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
         if p.stdout!= b'1\n':
-            sg.PopupQuickMessage("Password is wrong, please correct")
+            self.err=True
             return
 
         #prepare environment
@@ -111,7 +112,8 @@ class ProgressBarGui(IGui):
         while 1:
             events, values = self.window.Read(timeout=10)
             if events is None:
-                break
+
+                return 1
             if events == 'btn_ins':
                 password=confirm_Password()
                 if password!="":                
@@ -122,4 +124,6 @@ class ProgressBarGui(IGui):
                     self.window.find_element('btn_ins').Update(disabled=True)
             if self.done==True:
                 break
-        self.window.Close()
+            if self.err==True:
+                self.window.find_element('btn_ins').Update(disabled=False)
+        return 1

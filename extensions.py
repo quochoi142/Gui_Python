@@ -55,10 +55,6 @@ def getIp():
     return ni.ifaddresses(nets[0])[ni.AF_INET][0]['addr']
 
 
-<<<<<<< HEAD
-import subprocess
-=======
->>>>>>> origin/dev
 def install(scr):
     subprocess.call("./Intall/Step1.sh")
     genYaml.config(scr)
@@ -67,15 +63,3 @@ def install(scr):
     subprocess.call("./Intall/Step3.sh")
     # Create account Postgres
     subprocess.call("./Intall/Step4.sh")
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> origin/dev
