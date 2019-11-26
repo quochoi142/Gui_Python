@@ -38,7 +38,8 @@ sudo -u $USER mkdir $HATCHING
 
 # copy haching binary files
 echo "[2/10]. Copy haching files"
-tar -C $HATCHING -xf ./hatching.tar
+# tar -C $HATCHING -xf ./hatching.tar
+cp ./hatching $HATCHING
 export PATH=$HATCHING:$PATH
 
 

@@ -30,8 +30,8 @@ class ProgressBarGui(IGui):
             [sg.ProgressBar(max_value=100, orientation='horizontal', size=(20, 20),
                             key='progressbar')],
             
-            [sg.Button('Install', key='btn_ins')],
-            [sg.Text(text='Password is wrong, please correct',visible=False,key='err',text_color='red')]
+            [sg.Button('Install', key='btn_ins')]
+           
         ]
         self.window = sg.Window('Progress', layout)
         self.progress=0
@@ -45,14 +45,14 @@ class ProgressBarGui(IGui):
     def __install__(self,scr, password, src):
         
 
-        # permission
-        p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
-        if p.stdout!= b'1\n':
-            self.err=True
-            return
+        # # permission
+        # p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
+        # if p.stdout!= b'1\n':
+        #     self.err=True
+        #     return
 
         #prepare environment
-        sp.call('./Install/Step1.sh')
+        #sp.call('./Install/Step1.sh')
         genYaml.config(scr)
         #install package and kill processes
         sp.call("./Intall/Step2.sh")
@@ -115,8 +115,8 @@ class ProgressBarGui(IGui):
 
                 return 1
             if events == 'btn_ins':
-                password=confirm_Password()
-                if password!="":                
+                # password=confirm_Password()
+                # if password!="":                
                     
                     t1= threading.Thread(target=self.__install__,args=(self.scr,password,None,))
                     t1.start()
