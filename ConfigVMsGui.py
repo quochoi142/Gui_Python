@@ -56,7 +56,7 @@ class ConfigVMsGui(IGui):
             # instances.append(createApp())
         instances.append([sg.Button('Previous', key='btn_prev'),
                           sg.Button('Next', key=('btn_next'))])
-        self.window = sg.Window('SetInstant', instances)
+        self.window = sg.Window('SetInstant', instances, return_keyboard_events=True)
         self.lstApps = {}
 
     def getGui(self):
@@ -81,9 +81,11 @@ class ConfigVMsGui(IGui):
         return False
 
     def listen(self):
+        value = {}
         while True:
             event, values = self.window.Read()
             self.Values = values
+            # print(values)
             lstApps = self.lstApps
             # print(values)
             if event is not None:
