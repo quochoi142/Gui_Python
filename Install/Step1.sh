@@ -1,10 +1,7 @@
 #!/bin/sh
 if [ $SUDO_USER ]; then USER=$SUDO_USER; else USER=`whoami`; fi
 
-if ! [ $(id -u) = 0 ]; then
-   echo "This script must be run as root" 
-   exit 1
-fi
+
 
 sudo sh -c "yes | sudo rm /var/lib/dpkg/lock"
 sudo sh -c "yes | sudo dpkg --configure -a"
