@@ -132,9 +132,6 @@ sudo sh -c "rm $HATCHING/scripts/patch.ps1"
 echo "[6/10]. Install nessary package"
 sudo setfacl -m u:$USER:rwx /dev/kvm
 
-# setup network
-echo "[7/10]. Start sandbox-net process"
-sudo $HATCHING/sandbox-net $HATCHING/data &
 
 if [ -e $HATCHING/resources/en_windows_server_2016_x64_dvd_9718492.iso ]
 then
@@ -142,7 +139,3 @@ then
 fi
 
 
-cd $HATCHING
-for filename in $HATCHING/config/*.yaml; do
-    sudo sh -c "PATH=$HATCHING:$PATH $HATCHING/hatchvm -loglevel=trace generate $filename"
-done

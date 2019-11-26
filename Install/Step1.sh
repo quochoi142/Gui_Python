@@ -6,7 +6,6 @@ if ! [ $(id -u) = 0 ]; then
    exit 1
 fi
 
-CWD=$(pwd)
 sudo sh -c "yes | sudo rm /var/lib/dpkg/lock"
 sudo sh -c "yes | sudo dpkg --configure -a"
 

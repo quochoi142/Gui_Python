@@ -11,13 +11,12 @@ from collections import OrderedDict
 #     except yaml.YAMLError as exc:
 #         print(exc)
 
-def definePath():
-    return '/.hatch/' + name
-def generateConfig(content,name):
-    if os.path.isfile(etx.homedir + definePath() + '.yaml'):
-        os.remove(etx.homedir + definePath() + '.yaml')
 
-    with open(etx.homedir + definePath() + '.yaml', 'w') as outfile:
+def generateConfig(content,name):
+    if os.path.isfile(etx.homedir + '/.hatch/' + name + '.yaml'):
+        os.remove(etx.homedir + '/.hatch/'+ name + '.yaml')
+
+    with open(etx.homedir + '/.hatch/' + name + '.yaml', 'w') as outfile:
         try:
             yaml.dump(content, outfile, default_flow_style=False)
         except yaml.YAMLError as exc:
