@@ -1,12 +1,5 @@
-import PySimpleGUI as sg
-import re
+import subprocess
 
-user = ''
-passwd = ''
-def loginLayout():
-    return [[sg.Text('Username'), sg.InputText(metadata='Username', key='username', enable_events=True)], 
-            [sg.Text('Password'), sg.InputText('Password', key='pass', enable_events=True)],
-            [sg.Button('Ok'), sg.Button('Cancel')]]
 
 def signupLayout():
     return [[sg.Text('Email', size=(18, None), pad=(None, 8)), sg.InputText(key='email', enable_events=True)], 

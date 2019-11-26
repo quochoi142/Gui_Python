@@ -3,9 +3,9 @@ from IGui import IGui
 import PySimpleGUI as sg
 import extensions as ext
 import re
-from getkey import getkey, keys, platform
+#from getkey import getkey, keys, platform
 import keyboard
-import getch
+#import getch
 from LicenseGui import LicenseGui
 import getpass
 

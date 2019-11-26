@@ -18,6 +18,7 @@ while 1:
         if pos == 0:
             if pos + 1 < len(scr):
                 scr[pos+1] = fac.createGui(pos + 1, scr)
+          
             else:
                 scr.append(fac.createGui(pos + 1, scr))
         # elif pos == 1:
@@ -27,6 +28,8 @@ while 1:
         #     # print(scr[pos].lstApps)
         #     break
         # Others screen
+        elif pos==2:
+            break
         else:
             if pos + 1 < len(scr):
                 scr[pos+1].getGui().UnHide()

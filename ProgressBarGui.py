@@ -31,30 +31,29 @@ class ProgressBarGui(IGui):
         layout = [
             [sg.ProgressBar(max_value=100, orientation='horizontal', size=(20, 20),
                             key='progressbar')],
-
-            [sg.Button('Install', key='btn_ins')],
-            [sg.Text(text='Password is wrong, please correct',
-                     visible=False, key='err', text_color='red')]
+            
+            [sg.Button('Install', key='btn_ins')]
+           
         ]
         self.window = sg.Window('Progress', layout)
-        self.progress = 0
-        self.scr = scr
-        self.done = False
-
+        self.progress=0
+        self.scr=scr
+        self.done=False
+        self.err=False
+        
     def getGui(self):
         return self.window
 
     def __install__(self, scr, password, src):
 
-        # permission
-        p = sp.run('echo {} | echo -S 1'.format(password),
-                   shell=True, stdout=sp.PIPE)
-        if p.stdout != b'1\n':
-            sg.PopupQuickMessage("Password is wrong, please correct")
-            return
+        # # permission
+        # p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
+        # if p.stdout!= b'1\n':
+        #     self.err=True
+        #     return
 
-        # prepare environment
-        sp.call('./Install/Step1.sh')
+        #prepare environment
+        #sp.call('./Install/Step1.sh')
         genYaml.config(scr)
         # install package and kill processes
         sp.call("./Intall/Step2.sh")
@@ -92,7 +91,7 @@ class ProgressBarGui(IGui):
         files = etx.getAllfile('~/.hatch/config', '.yaml')
         leng = len(files)
         for file in files:
-            sp.call('./Install/InstallVm.sh {}'.format(file))
+            sp.call(['./Install/InstallVm.sh',file])
             self.updateProgress(1/leng*10)
 
         subprocess.call("./Intall/Step4.sh")
@@ -112,16 +111,18 @@ class ProgressBarGui(IGui):
         while 1:
             events, values = self.window.Read(timeout=10)
             if events is None:
-                break
-            if events == 'btn_ins':
-                password = confirm_Password()
-                if password != "":
 
-                    t1 = threading.Thread(
-                        target=self.__install__, args=(self.scr, password, None,))
+                return 1
+            if events == 'btn_ins':
+                # password=confirm_Password()
+                # if password!="":                
+                    
+                    t1= threading.Thread(target=self.__install__,args=(self.scr,password,None,))
                     t1.start()
                     t1.join()
                     self.window.find_element('btn_ins').Update(disabled=True)
             if self.done == True:
                 break
-        self.window.Close()
+            if self.err==True:
+                self.window.find_element('btn_ins').Update(disabled=False)
+        return 1
