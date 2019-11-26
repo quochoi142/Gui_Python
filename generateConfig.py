@@ -11,13 +11,10 @@ from collections import OrderedDict
 #     except yaml.YAMLError as exc:
 #         print(exc)
 
-<<<<<<< HEAD
 def definePath():
     return '/.hatch/' + name
     
-=======
 
->>>>>>> origin/hoi
 def generateConfig(content,name):
     if os.path.isfile(etx.homedir + '/.hatch/' + name + '.yaml'):
         os.remove(etx.homedir + '/.hatch/'+ name + '.yaml')
