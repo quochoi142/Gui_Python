@@ -63,9 +63,9 @@ while 1:
                 scr[pos+1] = fac.createGui(pos + 1, scr)
             else:
                 scr.append(fac.createGui(pos + 1, scr))
-        elif pos == 1:
-            etx.install(scr)
-            break
+        # elif pos == 1:
+        #     etx.install(scr)
+        #     break
             #gen.config(scr)
         #     # print(scr[pos].lstApps)
         #     break

@@ -96,7 +96,8 @@ class ConfigVMsGui(IGui):
                     self.license=LicenseGui()
                     if self.license.listen()==1:
                         self.license.getGui().Close()
-                        return 1
+                return 1
+                
                 
             elif event == 'btn_prev':
                 return -1

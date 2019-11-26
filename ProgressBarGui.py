@@ -7,15 +7,36 @@ import extensions as etx
 import time
 import threading
 
+def confirm_Password():
+
+    layout=[
+        [sg.Text("Password OS"), sg.InputText("",password_char='*',key='pass')],
+        [sg.Button("Confirm",key='btn_confirm')]
+    ]
+    win=sg.Window('Password',layout)
+    while 1:
+        events, values = win.Read()
+        if events is None:
+            win.Close()
+            return ""
+        if events == 'btn_confirm':
+            if values['pass']!="":
+                win.Close()
+                return values['pass']
+
 class ProgressBarGui(IGui):
-    def __init__(self):
+    def __init__(self,scr):
         layout = [
-            [sg.ProgressBar(max_value=100, , orientation='horizontal', size=(20, 20),
-                            key='progressbar')]
+            [sg.ProgressBar(max_value=100, orientation='horizontal', size=(20, 20),
+                            key='progressbar')],
+            
+            [sg.Button('Install', key='btn_ins')],
+            [sg.Text(text='Password is wrong, please correct',visible=False,key='err',text_color='red')]
         ]
         self.window = sg.Window('Progress', layout)
-        self.window
         self.progress=0
+        self.scr=scr
+        self.done=False
 
     def getGui(self):
         return self.window
@@ -24,7 +45,11 @@ class ProgressBarGui(IGui):
         
 
         # permission
-        sp.run('echo {} | sudo -S ls'.format(password), shell=True)
+        p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
+        if p.stdout!= b'1\n':
+            sg.PopupQuickMessage("Password is wrong, please correct")
+            return
+
         #prepare environment
         sp.call('./Install/Step1.sh')
         genYaml.config(scr)
@@ -45,7 +70,7 @@ class ProgressBarGui(IGui):
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/thi_nguyen_opswat_com/EfCgzTh8OARNvCX1UFE_Y2wBHsJGzi8zHvoUK6icolgetQ?download=1 -O $HATCHING/resources/CentOS-7-x86_64-Minimal-1810.iso -q --show-progress',
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/thi_nguyen_opswat_com/EdBqg-HF6ElJqjllW086xVEB0diiooZ8TJ-NPtxWrXcVOA?download=1 -O $HATCHING/resources/Office.zip -q --show-progress'
             ]
-            for i in range(0:5,step=2):
+            for i in range(0,5,2):
                 sp.run(softs[i],shell=True)
                 sp.run(softs[i+1],shell=True)
                 self.updateProgress(10)
@@ -82,13 +107,19 @@ class ProgressBarGui(IGui):
 
 
     def listen(self):
-       t1= threading.Thread(target=self.__install__,args=(None,'1',None,))
-        t1.start()
-        t1.join()
+      
         while 1:
             events, values = self.window.Read(timeout=10)
             if events is None:
                 break
+            if events == 'btn_ins':
+                password=confirm_Password()
+                if password!="":                
+                    
+                    t1= threading.Thread(target=self.__install__,args=(self.scr,password,None,))
+                    t1.start()
+                    t1.join()
+                    self.window.find_element('btn_ins').Update(disabled=True)
             if self.done==True:
                 break
         self.window.Close()
