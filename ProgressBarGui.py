@@ -89,7 +89,7 @@ class ProgressBarGui(IGui):
         files=etx.getAllfile('~/.hatch/config','.yaml')
         leng=len(files)
         for file in files:
-            sp.call('./Install/InstallVm.sh {}'.format(file))
+            sp.call(['./Install/InstallVm.sh',file])
             self.updateProgress(1/leng*10)
         
          

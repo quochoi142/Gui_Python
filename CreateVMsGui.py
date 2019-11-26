@@ -27,7 +27,7 @@ from IGui import IGui
 
 class CreateVMsGui(IGui):
     def __init__(self):
-        sp.call('./Install/Step1.sh')
+        #sp.call('./Install/Step1.sh')
         layout = [
             [sg.Checkbox('Windows 7', default=True, key = 'win7', size=(15, 10)),
             sg.Text('Numbers of VMs'),

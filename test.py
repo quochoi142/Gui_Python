@@ -1,4 +1,4 @@
 import subprocess
 
 
-subprocess.run(['sudo','ls'])
+subprocess.call(['./Install/CreateAccount.sh','hoi'])
