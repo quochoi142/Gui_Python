@@ -45,16 +45,25 @@ def validateInput(input):
 
 
 # lst = ['item', 'test', 'office2012', 'test1', 'liscense', 'key']
-
 # if any('office2013' in item for item in lst):
 #     print('pass')
 
-import sys
-import tty
-tty.setcbreak(sys.stdin)
+# import sys
+# import tty
+# tty.setcbreak(sys.stdin)
 
-while True:
-    print ord(sys.stdin.read(1))
-PI = 3.14
-PI=2
-print(PI)
+# while True:
+#     print(ord(sys.stdin.read(1))
+# PI = 3.14
+# PI=2
+# print(PI)
+import subprocess as sp
+import keyboard
+p = sp.run('echo . | sudo -S su',
+                   shell=True, stdout=sp.PIPE)
+if p.stdout != b'1\n':
+    print("done")
+    char = keyboard.read_key()
+    print(char)
+    #sg.PopupQuickMessage("Password is wrong, please correct")
+            

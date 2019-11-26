@@ -7,58 +7,61 @@ import extensions as etx
 import time
 import threading
 
-def confirm_Password():
 
-    layout=[
-        [sg.Text("Password OS"), sg.InputText("",password_char='*',key='pass')],
-        [sg.Button("Confirm",key='btn_confirm')]
+def confirm_Password():
+    layout = [
+        [sg.Text("Password OS"), sg.InputText(
+            "", password_char='*', key='pass')],
+        [sg.Button("Confirm", key='btn_confirm')]
     ]
-    win=sg.Window('Password',layout)
+    win = sg.Window('Password', layout)
     while 1:
         events, values = win.Read()
         if events is None:
             win.Close()
             return ""
         if events == 'btn_confirm':
-            if values['pass']!="":
+            if values['pass'] != "":
                 win.Close()
                 return values['pass']
 
+
 class ProgressBarGui(IGui):
-    def __init__(self,scr):
+    def __init__(self, scr):
         layout = [
             [sg.ProgressBar(max_value=100, orientation='horizontal', size=(20, 20),
                             key='progressbar')],
-            
+
             [sg.Button('Install', key='btn_ins')],
-            [sg.Text(text='Password is wrong, please correct',visible=False,key='err',text_color='red')]
+            [sg.Text(text='Password is wrong, please correct',
+                     visible=False, key='err', text_color='red')]
         ]
         self.window = sg.Window('Progress', layout)
-        self.progress=0
-        self.scr=scr
-        self.done=False
+        self.progress = 0
+        self.scr = scr
+        self.done = False
 
     def getGui(self):
         return self.window
 
-    def __install__(self,scr, password, src):
-        
+    def __install__(self, scr, password, src):
 
         # permission
-        p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
-        if p.stdout!= b'1\n':
+        p = sp.run('echo {} | echo -S 1'.format(password),
+                   shell=True, stdout=sp.PIPE)
+        if p.stdout != b'1\n':
             sg.PopupQuickMessage("Password is wrong, please correct")
             return
 
-        #prepare environment
+        # prepare environment
         sp.call('./Install/Step1.sh')
         genYaml.config(scr)
-        #install package and kill processes
+        # install package and kill processes
         sp.call("./Intall/Step2.sh")
         self.updateProgress(10)
-        #get resource
+        # get resource
         if src is None:
-            softs=[
+            softs = [
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/tongqing_liu_opswat_com/EV0hanqY-FFOg9zAOjiVQWMBWoqXEyJ5zGsOytNGki5smw?download=1 -O $HATCHING/resources/win7ultimate.iso -q --show-progress',
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/tongqing_liu_opswat_com/Edr41t0uY7NBpmG5MjzP-ngBn6rMyLm0VGWAUgx3NJiRkA?download=1 -O $HATCHING/resources/Win10_1703_English_x64.iso -q --show-progress',
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/tongqing_liu_opswat_com/ERYd0WjCl49JpiUgyOOSbnYB-2Ow2mqc7Oq0icenM1sM4g?download=1 -O $HATCHING/resources/en_windows_server_2016_x64_dvd_9718492.iso -q --show-progress',
@@ -70,56 +73,55 @@ class ProgressBarGui(IGui):
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/thi_nguyen_opswat_com/EfCgzTh8OARNvCX1UFE_Y2wBHsJGzi8zHvoUK6icolgetQ?download=1 -O $HATCHING/resources/CentOS-7-x86_64-Minimal-1810.iso -q --show-progress',
                 'sudo -u $USER wget -q https://opswat2017-my.sharepoint.com/:u:/g/personal/thi_nguyen_opswat_com/EdBqg-HF6ElJqjllW086xVEB0diiooZ8TJ-NPtxWrXcVOA?download=1 -O $HATCHING/resources/Office.zip -q --show-progress'
             ]
-            for i in range(0,5,2):
-                sp.run(softs[i],shell=True)
-                sp.run(softs[i+1],shell=True)
+            for i in range(0, 5, 2):
+                sp.run(softs[i], shell=True)
+                sp.run(softs[i+1], shell=True)
                 self.updateProgress(10)
             sp.call('./Install/Download.sh')
         else:
-            sp.call('sudo cp {}/* {}'.format(src,etx.homedir+'/.hatch/resources/'))
-            
-            for i in range(0,5):
+            sp.call('sudo cp {}/* {}'.format(src,
+                                             etx.homedir+'/.hatch/resources/'))
+
+            for i in range(0, 5):
                 time.sleep(2)
                 self.updateProgress(10)
-                     
+
         gen.configData(scr)
         sp.call('./Intall/Step3.sh')
-        #create VMs
-        files=etx.getAllfile('~/.hatch/config','.yaml')
-        leng=len(files)
+        # create VMs
+        files = etx.getAllfile('~/.hatch/config', '.yaml')
+        leng = len(files)
         for file in files:
             sp.call('./Install/InstallVm.sh {}'.format(file))
             self.updateProgress(1/leng*10)
-        
-         
+
         subprocess.call("./Intall/Step4.sh")
-        #### Create account Postgres
+        # Create account Postgres
         subprocess.call("./Intall/Step5.sh")
-        self.done=True
-        
+        self.done = True
 
     def updateProgress(i):
-        
-        for j in range(1,i):
+
+        for j in range(1, i):
             time.sleep(1)
-            self.progress+=j
+            self.progress += j
             self.getGui().find_element('progressbar').UpdateBar(self.progress)
 
-
     def listen(self):
-      
+
         while 1:
             events, values = self.window.Read(timeout=10)
             if events is None:
                 break
             if events == 'btn_ins':
-                password=confirm_Password()
-                if password!="":                
-                    
-                    t1= threading.Thread(target=self.__install__,args=(self.scr,password,None,))
+                password = confirm_Password()
+                if password != "":
+
+                    t1 = threading.Thread(
+                        target=self.__install__, args=(self.scr, password, None,))
                     t1.start()
                     t1.join()
                     self.window.find_element('btn_ins').Update(disabled=True)
-            if self.done==True:
+            if self.done == True:
                 break
         self.window.Close()
