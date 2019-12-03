@@ -45,7 +45,7 @@ class ProgressBarGui(IGui):
         return self.window
 
     def __install__(self, scr, password, src):
-        user=etx.username
+        user=etx.getUser()
         print(user)
         # permission
         p = sp.run('echo {} | sudo -S echo 1'.format(password),
@@ -82,7 +82,7 @@ class ProgressBarGui(IGui):
                 self.progress+=10
             sp.call(['sudo',"./Install/Download.sh",user])
         else:
-            sp.call(['sudo','cp',src,'/home/'+user+'/.hatch/resources/'])
+            sp.call(['sudo','cp','-r',src,'/home/'+user+'/.hatch/resources/'])
             
             for i in range(0, 5):
                 time.sleep(2)
@@ -110,7 +110,7 @@ class ProgressBarGui(IGui):
         sp.call(['sudo',"./Install/Step4.sh",user])
         print('set network')
 
-        account = src[2].values
+        account = scr[2].values
         sp.call(['sudo','./Install/CreateAccount.sh',
             account['company'], account['email'], account['fname'], account['lname'], account['password'], account['phone']])
         print('create account')

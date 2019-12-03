@@ -1,6 +1,6 @@
 #!/bin/bash
 USER=$1
-HATCHING=/home/$USER/.hatch
+HATCHING=USER/.hatch
 # create postgres account
 sudo sh -c "sudo -u postgres createuser triage_frontend"
 sudo sh -c "sudo -u postgres psql -c \"ALTER USER triage_frontend PASSWORD 'test';\""

@@ -1,3 +1,4 @@
 from pathlib import *
 
-print(str(Path.home()))
+a=str(Path.home()).split('/')
+print(a)

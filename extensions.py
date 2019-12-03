@@ -1,3 +1,4 @@
+from pathlib import *
 import subprocess
 import netifaces as ni
 import socket
@@ -63,3 +64,8 @@ def install(scr):
     subprocess.call("./Intall/Step3.sh")
     # Create account Postgres
     subprocess.call("./Intall/Step4.sh")
+
+from pathlib import *
+print(str(Path.home()))
+def getUser():
+    return str(Path.home()).split('/')[2]
