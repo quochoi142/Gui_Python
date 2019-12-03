@@ -14,14 +14,19 @@ from collections import OrderedDict
 def definePath():
     return '/.hatch/' + name
     
+def prepareConfig():
+    if os.path.isdir(etx.homedir+'/.hatch/config'):
+        os.removedirs(etx.homedir+'/.hatch/config')
+    os.mkdir(etx.homedir+'/.hatch/config')
 
-def generateConfig(content,name):
-    if os.path.isfile(etx.homedir + '/.hatch/' + name + '.yaml'):
-        os.remove(etx.homedir + '/.hatch/'+ name + '.yaml')
+def generateConfig(content,path,name):
+    if os.path.isfile(path + name + '.yaml'):
+        os.remove( path+ name + '.yaml')
 
-    with open(etx.homedir + '/.hatch/' + name + '.yaml', 'w') as outfile:
+    with open(path + name + '.yaml', 'w') as outfile:
         try:
             yaml.dump(content, outfile, default_flow_style=False)
+            print('generate file'+name)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -50,7 +55,7 @@ def configData():
             temp['tags'].append('x64')
             machine['machines'][vm] = temp
     content['machinery'].append(machine)
-    generateConfig(content,'data/sandbox')
+    generateConfig(content,etx.homedir+'/.hatch/data/','sandbox')
 
 def parseYaml(path):
     with open(path, 'r') as stream:

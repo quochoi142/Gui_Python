@@ -1,7 +1,7 @@
-#!/bin/sh
-if [ $SUDO_USER ]; then USER=$SUDO_USER; else USER=`whoami`; fi
+#!/bin/bash
+USER=$1
 
-
+echo $USER
 
 sudo sh -c "yes | sudo rm /var/lib/dpkg/lock"
 sudo sh -c "yes | sudo dpkg --configure -a"
@@ -38,8 +38,7 @@ sudo -u $USER mkdir $HATCHING
 
 # copy haching binary files
 echo "[2/10]. Copy haching files"
-# tar -C $HATCHING -xf ./hatching.tar
-cp ./hatching $HATCHING
+tar -C $HATCHING -xf ./hatching.tar
 export PATH=$HATCHING:$PATH
 
 

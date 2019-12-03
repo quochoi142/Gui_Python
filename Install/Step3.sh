@@ -1,13 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+USER=$1
 HATCHING=/home/$USER/.hatch
 export PATH=$HATCHING:$PATH
 
-if [ -e $HATCHING/data/sandbox.yaml ]
-then
-    sudo -u $USER rm $HATCHING/data/sandbox.yaml
-fi
 
-sudo ln -s $HATCHING/config/sandbox.yaml $HATCHING/data/sandbox.yaml
+
 
 
 #remove opswat script

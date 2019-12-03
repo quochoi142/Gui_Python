@@ -31,33 +31,37 @@ class ProgressBarGui(IGui):
         layout = [
             [sg.ProgressBar(max_value=100, orientation='horizontal', size=(20, 20),
                             key='progressbar')],
-            
+
             [sg.Button('Install', key='btn_ins')]
-           
+
         ]
         self.window = sg.Window('Progress', layout)
-        self.progress=0
-        self.scr=scr
-        self.done=False
-        self.err=False
-        
+        self.progress = 0
+        self.scr = scr
+        self.done = False
+        self.err = False
+
     def getGui(self):
         return self.window
 
     def __install__(self, scr, password, src):
+        user=etx.username
+        print(user)
+        # permission
+        p = sp.run('echo {} | sudo -S echo 1'.format(password),
+                   shell=True, stdout=sp.PIPE)
+        if p.stdout != b'1\n':
+            self.err = True
+            return
+        print('permission')
+        # prepare environment
+        sp.call(['sudo',"./Install/Step1.sh",user])
+        
 
-        # # permission
-        # p=sp.run('echo {} | echo -S 1'.format(password), shell=True,stdout=sp.PIPE)
-        # if p.stdout!= b'1\n':
-        #     self.err=True
-        #     return
-
-        #prepare environment
-        #sp.call('./Install/Step1.sh')
-        genYaml.config(scr)
         # install package and kill processes
-        sp.call("./Intall/Step2.sh")
-        self.updateProgress(10)
+        sp.call(['sudo',"./Install/Step2.sh",user])
+        self.progress+=20
+        print('install package')
         # get resource
         if src is None:
             softs = [
@@ -75,36 +79,50 @@ class ProgressBarGui(IGui):
             for i in range(0, 5, 2):
                 sp.run(softs[i], shell=True)
                 sp.run(softs[i+1], shell=True)
-                self.updateProgress(10)
-            sp.call('./Install/Download.sh')
+                self.progress+=10
+            sp.call(['sudo',"./Install/Download.sh",user])
         else:
-            sp.call('sudo cp {}/* {}'.format(src,
-                                             etx.homedir+'/.hatch/resources/'))
-
+            sp.call(['sudo','cp',src,'/home/'+user+'/.hatch/resources/'])
+            
             for i in range(0, 5):
                 time.sleep(2)
-                self.updateProgress(10)
+                self.progress+=10
+        print('get resources')
 
-        gen.configData(scr)
-        sp.call('./Intall/Step3.sh')
+        gen.prepareConfig()
+        genYaml.config(scr)
+        print('generate YAML file')
+        print('config vm')
+        gen.configData()
+        print('config sanbox.yaml')
+
+        sp.call(['sudo',"./Install/Step3.sh",user])
+        print('config')
+
         # create VMs
-        files = etx.getAllfile('~/.hatch/config', '.yaml')
+        files = etx.getAllfile('/home/'+user+'/.hatch/config', '.yaml')
         leng = len(files)
         for file in files:
-            sp.call(['./Install/InstallVm.sh',file])
-            self.updateProgress(1/leng*10)
+            sp.call(['sudo','./Install/InstallVm.sh',user,'/home/'+user+'/.hatch/config/'+file+'.yaml'])
+            self.progress+=1/leng*10
+        print('create VMs')
 
-        subprocess.call("./Intall/Step4.sh")
-        # Create account Postgres
-        subprocess.call("./Intall/Step5.sh")
+        sp.call(['sudo',"./Install/Step4.sh",user])
+        print('set network')
+
+        account = src[2].values
+        sp.call(['sudo','./Install/CreateAccount.sh',
+            account['company'], account['email'], account['fname'], account['lname'], account['password'], account['phone']])
+        print('create account')
+
+        sp.call(['sudo',"./Install/Step5.sh",user])
+        print('Done')
+
         self.done = True
 
-    def updateProgress(i):
+    def updateProgress(self,i):
 
-        for j in range(1, i):
-            time.sleep(1)
-            self.progress += j
-            self.getGui().find_element('progressbar').UpdateBar(self.progress)
+            self.window['progressbar'].UpdateBar(self.progress)
 
     def listen(self):
 
@@ -114,15 +132,17 @@ class ProgressBarGui(IGui):
 
                 return 1
             if events == 'btn_ins':
-                # password=confirm_Password()
-                # if password!="":                
-                    
-                    t1= threading.Thread(target=self.__install__,args=(self.scr,password,None,))
+                password = confirm_Password()
+                if password != "":
+
+                    t1 = threading.Thread(
+                        target=self.__install__, args=(self.scr, password, '/home/'+etx.username+'/Desktop/Shared/Resources',))
                     t1.start()
                     t1.join()
                     self.window.find_element('btn_ins').Update(disabled=True)
+            self.updateProgress(self.progress)
             if self.done == True:
                 break
-            if self.err==True:
+            if self.err == True:
                 self.window.find_element('btn_ins').Update(disabled=False)
         return 1

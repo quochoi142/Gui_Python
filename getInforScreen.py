@@ -11,7 +11,7 @@ lstOs = [
 def config(scr):
     scr0 = scr[0].Values
     scr1 = scr[1].Values
-    lstAppsDefault = ['schtasks', {'name':'setres', 'var':{'width': 1280, 'height': 720}}, 'windows', 'wallpaper-fetch', 'cppredist',
+    lstAppsDefault = ['schtasks', {'name':'setres', 'vars':{'width': 1280, 'height': 720}}, 'windows', 'wallpaper-fetch', 'cppredist',
                       'dotnet472', 'mscorsvw', 'schtasks', 'ps1logging', 'patchandgo', 'finalize']
     lstApps = scr[1].lstApps
     # print(lstApps)
@@ -25,7 +25,7 @@ def config(scr):
             id = os['os'] + os['arch'] + 'v' + str(i)
             content = {}
             user = getpass.getuser()
-            content['Storage_dir'] = etx.homedir + '/.hatch/vmdata/storage'
+            content['storage_dir'] = etx.homedir + '/.hatch/vmdata/storage'
             content['temp_dir'] = etx.homedir + '/.hatch/vmdata/scratch'
             content['data_dirs'] = ['./resources']
             content['script_dirs'] = ['./scripts']
@@ -63,5 +63,5 @@ def config(scr):
                     'vnc_port': 11000 + os['from'] + j
                 }
                 content['instances'].append(ins)
-            gen.generateConfig(content, id)
+            gen.generateConfig(content,etx.homedir+'/.hatch/config/', id)
             # print(content)

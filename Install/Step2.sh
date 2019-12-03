@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
+USER=$1
 HATCHING=/home/$USER/.hatch
 export PATH=$HATCHING:$PATH
 
@@ -56,8 +57,7 @@ PKG_LIST=(
     libspice-server-dev
     libcacard0
     isomd5sum
-)
-
+])
 echo "[4/10]. Install nessary package"
 for pkg in ${PKG_LIST[@]}
 do

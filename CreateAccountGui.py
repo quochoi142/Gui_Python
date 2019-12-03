@@ -7,14 +7,16 @@ import re
 def validateInput(input):
     if re.match("[\w.]+@[\a-zA-z]+(\.[a-z]+)+$", input['email']):
         print('email')
-    if re.match(".{8,}", input['pass']):
-        if input['pass'] == input['repass']:
+    if re.match(".{8,}", input['password']):
+        if input['password'] == input['repassword']:
             print('password')
 
 def createAccountLayout():
     return [[sg.Text('Email', size=(10, None)), sg.InputText(key='email', enable_events=True)], 
-            [sg.Text('Password', size=(10, None)), sg.InputText(key='pass', enable_events=True)],
-            [sg.Text('Company', size=(10, None)), sg.InputText(key='companay', enable_events=True)],
+            [sg.Text('Password', size=(10, None)), sg.InputText(key='password', enable_events=True)],
+            [sg.Text('Confirm password', size=(10, None)), sg.InputText(key='repassword', enable_events=True)],
+            [sg.Text('Phone number', size=(10, None)), sg.InputText(key='phone', enable_events=True)],
+            [sg.Text('Company', size=(10, None)), sg.InputText(key='company', enable_events=True)],
             [sg.Text('First Name', size=(10, None)), sg.InputText(key='fname', enable_events=True)],
             [sg.Text('Last Name', size=(10, None)), sg.InputText(key='lname', enable_events=True)],
             [sg.Button('Previous', key='btn_previous'), sg.Button('Next', key=('btn_next'))]]
@@ -38,6 +40,7 @@ class CreateAccountGui(IGui):
                 return 0
             elif event == 'btn_next':
                 validateInput(values)
+                self.values=values
                 return 1
             elif event == 'btn_previous':
                 return -1

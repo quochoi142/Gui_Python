@@ -1,3 +1,6 @@
+#!/bin/bash
+USER=$1
+HATCHING=/home/$USER/.hatch
 sudo -u $USER unzip $HATCHING/resources_tmp.zip -d $HATCHING/resources
 sudo -u $USER unzip $HATCHING/resources_tmp2.zip -d $HATCHING/resources
 sudo -u $USER mv $HATCHING/resources/resource_2/* $HATCHING/resources/

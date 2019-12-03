@@ -5,7 +5,8 @@ import extensions as etx
 
 
 def getAllTags(arr):
-    for file in os.listdir(etx.homedir+"/.hatch/scripts"):
+    # for file in os.listdir(etx.homedir+"/.hatch/scripts"):
+    for file in os.listdir('./hatching/scripts'):
         if file.endswith(".ps1"):
             arr.append(file.split(".ps1")[0])
 

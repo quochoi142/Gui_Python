@@ -28,7 +28,7 @@ while 1:
         #     # print(scr[pos].lstApps)
         #     break
         # Others screen
-        elif pos==2:
+        elif pos==3:
             break
         else:
             if pos + 1 < len(scr):

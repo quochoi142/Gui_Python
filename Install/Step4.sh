@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+USER=$1
 HATCHING=/home/$USER/.hatch
 export PATH=$HATCHING:$PATH
 
